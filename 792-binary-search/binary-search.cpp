@@ -1,20 +1,19 @@
+#include <vector>
+
+
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-       int st=0;
-       int end=nums.size();
-       while(st<end){
-           int mid=st+(end-st)/2;
-           if(target==nums[mid]){
-               return mid;
-           }
-           if(target>nums[mid]){
-               st=mid+1;
-           }
-           if(target<nums[mid]){
-               end=mid;
-           }
-       } 
-       return -1;
+        int lo = 0;
+        int hi = nums.size() - 1;
+
+        while (lo <= hi) {
+            int m = (lo + hi) / 2;
+            if (nums[m] > target)  hi = m - 1;
+            else if (nums[m] < target)  lo = m + 1;
+            else return m;
+        }
+
+        return -1;
     }
 };
