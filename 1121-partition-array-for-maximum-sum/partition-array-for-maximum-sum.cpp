@@ -1,19 +1,21 @@
 class Solution {
 public:
     int maxSumAfterPartitioning(vector<int>& arr, int k) {
-        vector<int> dp(arr.size()+1);
         int n = arr.size();
-
-        for(int i = 1; i<= arr.size(); i++){
-            int maxi = 0 , ans=0;
-            for(int j = 1;j<= k and i-j>=0; j++){
-                cout<<i-j<<max(0,i-j)<<endl;
-
-                maxi = max(maxi, arr[i-j]);
-                ans = max(ans, dp[i-j]+maxi*(j));
+        vector<int> dp(n+1, 0);
+        dp[n] = 0;
+        for(int i = n-1; i >= 0; i--){
+            int len = 0;
+            int maxi = INT_MIN, ans = INT_MIN;
+            for(int j = i; j < min(n, i+k); j++){
+                len++;
+                maxi = max(maxi, arr[j]);
+                int sum = len * maxi + dp[j+1];
+                ans = max(ans, sum);
             }
             dp[i] = ans;
         }
-        return dp[n];
+
+        return dp[0];
     }
 };
