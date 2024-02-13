@@ -14,7 +14,7 @@ public:
         //     }
         // }
         // return ans;
-        string ans="";
+        
         int n=words.size();
         for(int i=0;i<n;i++){
             string temp1=words[i];
