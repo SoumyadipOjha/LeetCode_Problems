@@ -15,7 +15,8 @@ public:
         // }
         // return ans;
         string ans="";
-        for(int i=0;i<words.size();i++){
+        int n=words.size();
+        for(int i=0;i<n;i++){
             string temp1=words[i];
             string temp2=words[i];
             reverse(temp1.begin(),temp1.end());
