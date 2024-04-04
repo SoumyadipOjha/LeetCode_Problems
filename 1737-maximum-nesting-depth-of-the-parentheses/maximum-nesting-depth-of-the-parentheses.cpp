@@ -8,9 +8,9 @@ public:
             count++;
             maxi=max(maxi,count);
            }
-           if(s[i]==')')
+           else if(s[i]==')')
             count--;
-           
+           else continue;
         }
         return maxi;
     }
