@@ -6,7 +6,7 @@ public:
      while(left<right){
         int sum =s[left]+s[right];
         if(sum==target)return {left+1,right+1};
-        if(sum>target)right--;
+        else if(sum>target)right--;
         else{left++;}
      }
      return {-1,-1};
