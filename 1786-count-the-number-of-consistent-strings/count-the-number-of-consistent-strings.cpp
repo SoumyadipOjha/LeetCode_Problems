@@ -1,29 +1,20 @@
 class Solution {
 public:
     int countConsistentStrings(string allowed, vector<string>& words) {
-        vector<int> arr(26, -1);
-
-        for (int i = 0; i < allowed.size(); i++) {
-            arr[allowed[i] - 'a'] = 1; 
-        }
-
+        unordered_set<char> set(allowed.begin(), allowed.end());
         int ans = 0;
-
         for (int i = 0; i < words.size(); i++) {
             string a = words[i];
             bool consistent = true;
-
-            for (int j = 0; j < a.size(); j++) {
-                if (arr[a[j] - 'a'] ==-1) { 
+            for (char ch : a) {
+                if (set.find(ch) == set.end()) {
                     consistent = false;
                     break;
                 }
             }
-
             if (consistent)
                 ans++;
         }
-
         return ans;
     }
 };
