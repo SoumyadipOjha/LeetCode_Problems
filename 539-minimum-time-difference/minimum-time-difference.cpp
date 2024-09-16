@@ -2,7 +2,7 @@ class Solution {
 public:
     int m(string s) {
         int a = stoi(s.substr(0, 2)) * 60;
-        int b = stoi(s.substr(3, 2));
+        int b = stoi(s.substr(3, 5));
         return a + b;
     }
 
