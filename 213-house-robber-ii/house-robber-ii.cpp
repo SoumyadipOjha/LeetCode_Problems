@@ -1,43 +1,23 @@
 class Solution {
 public:
-    // int optimised_returner(int s, int e, vector<int>& nums) {
-    //     int prev = nums[s], prev2 = 0;
-    //     for (int i = s + 1; i < e; i++) {
-    //         int pick = nums[i] + prev2; // for 1st iteration prev2 is already 0
-    //         int curr =
-    //             max(pick, prev); // not pick = prev so directly pass it in max
-    //         prev2 = prev;
-    //         prev = curr;
-    //     }
-    //     return prev;
-    // }
-    // int rob(vector<int>& nums) {
-    //     int n = nums.size();
-    //     if (n == 1)
-    //         return nums[0];
-    //     int check1 = optimised_returner(0, n - 1, nums);
-    //     int check2 = optimised_returner(1, n, nums);
-    //     return max(check1, check2);
-    // }
-    int p(int s,int e,vector<int>&nums){
-        int prev=nums[s];int prev2=0;
-        for(int i=s+1;i<e;i++){
-            int pick=nums[i]+prev2;
-            int curr=max(pick,prev);
-            prev2=prev;
-            prev=curr;
-        }
-        return prev;
+int rob1(vector<int>&nums){
+    if(nums.size()==1)return nums[0];
+    vector<int>dp(nums.size());
+    dp[0]=nums[0];
+    dp[1]=max(nums[0],nums[1]);
+    for(int i=2;i<nums.size();i++){
+        dp[i]=max(nums[i]+dp[i-2],dp[i-1]);
     }
+    return dp[nums.size()-1]; 
+}
+    int rob(vector<int>& nums) {
+      if(nums.size()==1)return nums[0];
 
-    int rob(vector<int>&nums){
-        int n=nums.size();
-        if(n==1){
-            return nums[0];
-        }
-        int temp1=p(0,n-1,nums);
-        int temp2=p(1,n,nums);
-        return max(temp1,temp2);
+      vector<int>skipLast(nums.begin(),nums.end()-1);  
+      vector<int>skipFirst(nums.begin()+1,nums.end());  
+      
+      int skipLastAns=rob1(skipLast);
+      int skipFirstAns=rob1(skipFirst);
+      return max(skipLastAns,skipFirstAns);
     }
-
 };
