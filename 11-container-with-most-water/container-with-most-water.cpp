@@ -6,7 +6,7 @@ public:
         int ans = 0;
         while (left < right) {
             int maxi = min(height[left], height[right]) * (right - left);
-             ans = max(ans, maxi);
+            ans = max(ans, maxi);
             if (height[left] < height[right]) {
                 left++;
             } else {
