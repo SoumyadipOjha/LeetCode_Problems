@@ -1,32 +1,30 @@
 class Solution {
 public:
-    int r, c;
     int row[4] = {-1, +1, 0, 0};
     int col[4] = {0, 0, -1, +1};
+    int r, c;
     bool isValid(int i, int j) { return (i >= 0 && i < r && j >= 0 && j < c); }
+
     int orangesRotting(vector<vector<int>>& grid) {
         r = grid.size();
         c = grid[0].size();
-        int fresh = 0;
         queue<pair<int, int>> q;
-
-        for (int i = 0; i < r; i++)
+        int fresh_oranges = 0;
+        for (int i = 0; i < r; i++) {
             for (int j = 0; j < c; j++) {
                 if (grid[i][j] == 2)
                     q.push({i, j});
-
                 if (grid[i][j] == 1)
-                    fresh++;
+                    fresh_oranges++;
             }
-
-        if (fresh == 0) {
-            return 0;
         }
+        if (!fresh_oranges)
+            return 0;
         int timer = 0;
         while (!q.empty()) {
             timer++;
-            int curr_fresh = q.size();
-            while (curr_fresh--) {
+            int curr_freshOranges = q.size();
+            while (curr_freshOranges--) {
                 int i = q.front().first;
                 int j = q.front().second;
                 q.pop();
