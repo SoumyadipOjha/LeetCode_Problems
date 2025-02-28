@@ -1,36 +1,30 @@
 class Solution {
-private:
-    bool isValid(int i, int j, vector<vector<int>>& image,
-                 vector<vector<int>>& ans, int iniCol, int newCol) {
-        int n = image.size();
-        int m = image[0].size();
-        return (i >= 0 && i < n && j >= 0 && j < m && image[i][j] == iniCol &&
-                ans[i][j] != newCol);
-    }
-    void dfs(int row, int col, vector<vector<int>>& image,
-             vector<vector<int>>& ans, int iniCol, int newCol,
-             vector<int>& delRow, vector<int>& delCol) {
-        ans[row][col] = newCol;
-        for (int i = 0; i < 4; i++) {
-            int nRow = row + delRow[i];
-            int nCol = col + delCol[i];
-            if (isValid(nRow, nCol, image, ans, iniCol, newCol)) {
-                dfs(nRow, nCol, image, ans, iniCol, newCol, delRow, delCol);
-            }
-        }
-    }
-
 public:
+    int row[4] = {-1, +1, 0, 0};
+    int col[4] = {0, 0, -1, +1};
+    int r, c;
+    bool isValid(int i, int j) { return (i >= 0 && i < r && j >= 0 && j < c); }
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc,
                                   int color) {
-        int iniCol = image[sr][sc];
-        if (iniCol == color)
-            return image;
-        vector<vector<int>> ans = image;
-
-        vector<int> delRow = {-1, 0, +1, 0};
-        vector<int> delCol = {0, +1, 0, -1};
-        dfs(sr, sc, image, ans, iniCol, color, delRow, delCol);
-        return ans;
+        r = image.size();
+        c = image[0].size();
+        queue<pair<int, int>> q;
+        int initial_colour = image[sr][sc];
+        if(initial_colour==color)return image;
+        q.push({sr, sc});
+        image[sr][sc] = color;
+        while (!q.empty()) {
+            int i = q.front().first;
+            int j = q.front().second;
+            q.pop();
+            for (int k = 0; k < 4; k++) {
+                if (isValid(i + row[k], j + col[k]) &&
+                    image[i + row[k]][j + col[k]] == initial_colour) {
+                    image[i + row[k]][j + col[k]] = color;
+                    q.push({i + row[k], j + col[k]});
+                }
+            }
+        }
+        return image;
     }
 };
