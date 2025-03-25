@@ -1,18 +1,23 @@
 class Solution {
 public:
-    bool isIsomorphic(string str1, string str2) {
-        int m = str1.length();
-        int n = str2.length();
-        int freq1[256] = {0};
-        int freq2[256] = {0};
-        if (m != n)
+    bool isIsomorphic(string s, string t) {
+        if (s.size() != t.size())
             return false;
-        for (int i = 0; i < n; i++) {
-            if (freq1[str1[i]] == 0 && freq2[str2[i]] == 0) {
-                freq1[str1[i]] = str2[i];
-                freq2[str2[i]] = str1[i];
-            } else if (freq1[str1[i]] != str2[i])
+
+        unordered_map<char, char> mapS, mapT;
+
+        for (int i = 0; i < s.size(); i++) {
+            char c1 = s[i], c2 = t[i];
+
+            // Check if mapping exists and is consistent
+            if (mapS.count(c1) && mapS[c1] != c2)
                 return false;
+            if (mapT.count(c2) && mapT[c2] != c1)
+                return false;
+
+            // Create the mapping
+            mapS[c1] = c2;
+            mapT[c2] = c1;
         }
         return true;
     }
