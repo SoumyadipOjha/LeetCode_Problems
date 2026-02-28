@@ -1,35 +1,29 @@
 class Solution {
 public:
-    std::string minWindow(std::string s, std::string t) {
-        if (s.empty() || t.empty() || s.length() < t.length()) {
-            return "";
-        }
+    string minWindow(string s, string t) {
+        unordered_map<char, int> tMap, sMap;
+        for (char ch : t)
+            tMap[ch]++;
 
-        std::vector<int> map(128, 0);
-        int count = t.length();
-        int start = 0, end = 0, minLen = INT_MAX, startIndex = 0;
-        /// UPVOTE !
-        for (char c : t) {
-            map[c]++;
-        }
-
-        while (end < s.length()) {
-            if (map[s[end++]]-- > 0) {
-                count--;
-            }
-
-            while (count == 0) {
-                if (end - start < minLen) {
-                    startIndex = start;
-                    minLen = end - start;
+        int count = 0, beg = 0, len = INT_MAX;
+        for (int l = 0, r = 0; r < s.size(); r++) {
+            sMap[s[r]]++;
+            if (sMap[s[r]] <= tMap[s[r]])
+                count++;
+            while (count == t.size()) {
+                if (r - l + 1 < len) {
+                    len = r - l + 1;
+                    beg = l;
                 }
-
-                if (map[s[start++]]++ == 0) {
-                    count++;
-                }
+                if (sMap[s[l]] > tMap[s[l]]) {
+                    sMap[s[l]]--;
+                    l++;
+                } else
+                    break;
             }
         }
-
-        return minLen == INT_MAX ? "" : s.substr(startIndex, minLen);
+        if (len == INT_MAX)
+            len = 0;
+        return s.substr(beg, len);
     }
 };
