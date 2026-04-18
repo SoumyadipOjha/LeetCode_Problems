@@ -12,8 +12,11 @@ int reversee(int n){
     
 }
     int mirrorDistance(int n) {
-        int rev=reversee(n);
-        cout<<rev<<" ";
+        // int rev=reversee(n);
+        // cout<<rev<<" ";
+        string a= to_string(n);
+        reverse(a.begin(),a.end());
+        int rev=stoi(a);
         return abs(rev-n);
         }
 };
